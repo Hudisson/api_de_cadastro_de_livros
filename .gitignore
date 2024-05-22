@@ -5,7 +5,6 @@ target/
 !**/src/test/**/target/
 
 ### Arquivos e diretórios ignorados ###
-application.properties
 
 ### STS ###
 .apt_generated
