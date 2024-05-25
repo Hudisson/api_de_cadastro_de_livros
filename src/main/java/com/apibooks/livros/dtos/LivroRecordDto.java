@@ -2,7 +2,11 @@ package com.apibooks.livros.dtos;
 
 import java.math.BigDecimal;
 
-public record LivroRecordDto(String bookTitle, char bookType, BigDecimal price, String bookDesc, String bookAuthor, String bookPub) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record LivroRecordDto(@NotBlank String bookTitle, @NotBlank char bookType, @NotNull BigDecimal price, 
+                              String bookDesc, String bookAuthor, String bookPub) {
     
   /**
    *  bookTitle - Título do livro 

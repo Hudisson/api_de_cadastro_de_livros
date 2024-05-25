@@ -23,13 +23,13 @@ public class LivrosModels extends RepresentationModel<LivrosModels> implements S
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID bookId;
 
-    private String bookTitle; 
-    private char bookType;      // A - Livro físico, B - Livro digital(E-book)
-    private String urlImg;     // book img
-    private BigDecimal price;
-    private String bookDesc;  // book descriptio
-    private String bookAuthor;
-    private String bookPub;     // book publisher (publisher company)
+    private String bookTitle;        // Título do livro 
+    private char bookType;          // A - Livro físico, B - Livro digital(E-book)
+    private String urlImg;         // book img (imagem do livro)
+    private BigDecimal price;     // Preço do livro
+    private String bookDesc;     // book descriptio (descrição do livro)
+    private String bookAuthor;  // Autor(es) do livro
+    private String bookPub;    // book publisher/publisher company (Editora que publicou o livro )
     
     public static long getSerialversionuid() {
         return serialVersionUID;
