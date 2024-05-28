@@ -24,7 +24,7 @@ public class LivrosModels extends RepresentationModel<LivrosModels> implements S
     private UUID bookId;
 
     private String bookTitle;        // Título do livro 
-    private char bookType;          // A - Livro físico, B - Livro digital(E-book)
+    private String bookType;          // A - Livro físico, B - Livro digital(E-book)
     private String urlImg;         // book img (imagem do livro)
     private BigDecimal price;     // Preço do livro
     private String bookDesc;     // book descriptio (descrição do livro)
@@ -46,10 +46,10 @@ public class LivrosModels extends RepresentationModel<LivrosModels> implements S
     public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
     }
-    public char getBookType() {
+    public String getBookType() {
         return bookType;
     }
-    public void setBookType(char bookType) {
+    public void setBookType(String bookType) {
         this.bookType = bookType;
     }
     public String getUrlImg() {
