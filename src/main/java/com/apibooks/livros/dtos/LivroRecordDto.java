@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record LivroRecordDto(@NotBlank String bookTitle, @NotBlank char bookType, @NotNull BigDecimal price, 
+public record LivroRecordDto(@NotBlank String bookTitle, @NotBlank String bookType, @NotNull BigDecimal price, 
                               String bookDesc, String bookAuthor, String bookPub) {
     
   /**
