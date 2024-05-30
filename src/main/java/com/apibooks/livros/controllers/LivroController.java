@@ -83,4 +83,18 @@ public class LivroController {
         }
     }
 
+    /*Método para atualizar as informações de um livro ou ebook */
+    @PutMapping("/atualizar-livro/{bookid}")
+    public ResponseEntity<Object> atualizarLivro(@PathVariable(value = "bookid") UUID bookId, @RequestBody @Valid LivroRecordDto livroRecordDto){
+
+        Optional<LivrosModels> livroObj = livrosRepository.findById(bookId);
+        if(livroObj.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível atualizar. Livro não encontrado");
+        }
+
+        var livroModel = livroObj.get();
+        BeanUtils.copyProperties(livroRecordDto, livroModel);
+        return ResponseEntity.status(HttpStatus.OK).body(livrosRepository.save(livroModel));
+    }
+
 }

@@ -6,6 +6,9 @@ target/
 
 ### Arquivos e diretórios ignorados ###
 
+# Diretórios
+/uploads
+
 ### STS ###
 .apt_generated
 .classpath
