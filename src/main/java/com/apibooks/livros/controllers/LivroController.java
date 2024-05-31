@@ -1,9 +1,11 @@
 package com.apibooks.livros.controllers;
 
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,6 +32,9 @@ import com.apibooks.livros.propeties.FileStorageProperties;
 import com.apibooks.livros.repositories.LivrosRepository;
 
 import jakarta.validation.Valid;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Controller
 public class LivroController {
@@ -96,5 +102,39 @@ public class LivroController {
         BeanUtils.copyProperties(livroRecordDto, livroModel);
         return ResponseEntity.status(HttpStatus.OK).body(livrosRepository.save(livroModel));
     }
+
+    /*Método que retorna todos os livros livros e ebook */
+    @GetMapping("/livros")
+    public ResponseEntity<List<LivrosModels>> buscarTodosLivros(){
+
+        List<LivrosModels> listaDeLivros = livrosRepository.findAll();
+
+        if(!listaDeLivros.isEmpty()){
+            for(LivrosModels livros : listaDeLivros){
+                UUID bookId = livros.getBookId();
+                livros.add(linkTo(methodOn(LivroController.class).buscarLivroPorId(bookId)).withSelfRel());
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(listaDeLivros);
+    }
+
+    /*Método para buscar um livros ou ebook pelo id*/
+    @GetMapping("/livros/{bookid}")
+    public ResponseEntity<Object> buscarLivroPorId(@PathVariable(value = "bookid") UUID bookId){
+
+        Optional<LivrosModels> livroObj = livrosRepository.findById(bookId);
+
+        if(livroObj.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Livro ou ebook não encontrado.");
+        }
+
+        livroObj.get().add(linkTo(methodOn(LivroController.class).buscarTodosLivros()).withSelfRel());
+
+        return ResponseEntity.status(HttpStatus.OK).body(livroObj.get());
+    }
+
+    /*Método para retorna a imagem do livro ou ebook */
+   
 
 }
