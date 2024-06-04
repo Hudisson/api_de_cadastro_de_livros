@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -165,5 +166,16 @@ public class LivroController {
    }
 
    /*Método para deletar ou excluir um livro ou ebook */
+   @DeleteMapping("/excluir-livro/{bookid}")
+   public ResponseEntity<Object> deletarLivro(@PathVariable(value = "bookid") UUID bookId ){
+        Optional<LivrosModels> livrosObj = livrosRepository.findById(bookId);
+        if(livrosObj.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível excluir. Livro ou ebook não encontrado");
+        }
+
+        livrosRepository.delete(livrosObj.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Livro ou ebook excluido com sucesso.");
+   }
+   
    
 }
